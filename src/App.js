@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Header from './components/header/header.component';
@@ -44,9 +44,16 @@ class App extends React.Component {
         <Header />
         <Route exact path='/' component={HomePage}></Route>
         <Route exact path='/shop' component={ShopPage}></Route>
-        <Route exact path='/signin' component={SignInUpPage}></Route>
+        <Route exact path='/signin' render={() => this.props.currentUser ?
+          (<Redirect to='/' />) : (<SignInUpPage />)}></Route>
       </div>
     );
+  }
+}
+
+const mapStateToProps = ({ user }) => {
+  return {
+    currentUser: user.currentUser
   }
 }
 
@@ -56,4 +63,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
