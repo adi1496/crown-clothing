@@ -6,3 +6,10 @@ export const toggleCartHidden = () => {
     //we don't need a payload
   }
 } 
+
+export const addItem = item => {
+  return {
+    type: CartActionsTypes.ADD_ITEM,
+    payload: item
+  }
+}
